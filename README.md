@@ -1,4 +1,4 @@
-# 🛡️ OWASP Detection Lab Series: Real-Time Threat Detection with Wazuh SIEM
+# 🛡️ OWASP Detection Lab: Real-Time Threat Detection with Wazuh SIEM
 
 [![Wazuh](https://img.shields.io/badge/SIEM-Wazuh-005571?style=flat&logo=wazuh&logoColor=white)](https://wazuh.com/)
 [![OWASP Top 10](https://img.shields.io/badge/Project-OWASP%20Top%2010%20Detection-blue)](https://owasp.org/Top10/)
@@ -6,49 +6,64 @@
 
 ## 📌 Tentang Proyek Ini
 
-Repositori ini merupakan **koleksi portofolio lab keamanan siber** yang berfokus pada **implementasi Wazuh SIEM** untuk mendeteksi berbagai serangan yang termasuk dalam daftar **OWASP Top 10**.
+Repositori ini merupakan **koleksi portofolio lab keamanan siber** yang mendokumentasikan implementasi **Wazuh SIEM** untuk mendeteksi berbagai serangan yang termasuk dalam daftar **OWASP Top 10**.
 
-Setiap serangan yang disimulasikan akan dikonfigurasi aturan deteksinya di Wazuh, kemudian di-mapping ke kerangka **MITRE ATT&CK** untuk memberikan konteks ancaman yang lebih mendalam. Tujuannya adalah untuk mendemonstrasikan kemampuan dalam *Security Monitoring*, *SIEM Engineering*, dan *Threat Detection*.
+Setiap skenario serangan dikonfigurasi dengan *custom rules* di Wazuh, diuji dalam lingkungan lab terkendali, dan di-mapping ke kerangka **MITRE ATT&CK** untuk memberikan konteks ancaman yang lebih mendalam.
 
-## 📚 Daftar Skenario Deteksi (OWASP Top 10)
+## 📂 Struktur Repositori
+OWASP-Detection-Lab/
+├── 01-Broken-Authentication/ # Skenario A01: Broken Authentication
+│ └── README.md # Dokumentasi deteksi Brute Force dengan Hydra
+├── 02-Cryptographic-Failures/ # (Coming Soon)
+├── 03-Injection/ # (Coming Soon)
+├── images/ # Screenshot dan gambar pendukung
+├── rules/ # Kumpulan custom rules Wazuh (XML)
+└── README.md # Dokumentasi utama (file ini)
 
-Proyek ini akan terus dikembangkan untuk mencakup lebih banyak kategori OWASP Top 10. Berikut adalah skenario yang sudah atau akan diimplementasikan:
+text
+
+## 📋 Daftar Skenario Deteksi (OWASP Top 10)
 
 | Kode | Kategori OWASP | Vektor Serangan | Status | Dokumentasi |
 |:----:|----------------|-----------------|--------|-------------|
-| **A01** | Broken Authentication | Brute Force Attack dengan Hydra | ✅ Selesai | [Lihat Detil](./01-Broken-Authentication.md) |
+| **A01** | Broken Authentication | Brute Force Attack dengan Hydra | ✅ Selesai | [01-Broken-Authentication/](./01-Broken-Authentication/) |
 | A02 | Cryptographic Failures | *(Coming Soon)* | ⏳ Rencana | - |
 | A03 | Injection | *(Coming Soon)* | ⏳ Rencana | - |
 | A04 | Insecure Design | *(Coming Soon)* | ⏳ Rencana | - |
 | A05 | Security Misconfiguration | *(Coming Soon)* | ⏳ Rencana | - |
-| *...dan seterusnya...* | | | | |
-
-> **Catatan**: Setiap dokumentasi mencakup arsitektur lab, konfigurasi rule Wazuh, hasil deteksi, serta mapping ke MITRE ATT&CK.
 
 ## 🧪 Arsitektur Lab Umum
 
-Lingkungan lab yang digunakan relatif konsisten untuk setiap skenario, dengan komponen sebagai berikut:
+Lingkungan lab yang digunakan relatif konsisten untuk setiap skenario:
 
-*   **Attacker Machine**: Kali Linux (IP Dinamis)
-*   **SIEM Manager**: Ubuntu 22.04 - Wazuh Manager (pusat analisis log)
-*   **Target Machine**: Ubuntu Server 22.04 - Menjalankan aplikasi rentan (DVWA, dll) + Wazuh Agent
+| Peran | Sistem Operasi | Tools/Aplikasi |
+|-------|----------------|----------------|
+| **Attacker** | Kali Linux | Hydra, SQLmap, dsb (sesuai skenario) |
+| **Target (Agent)** | Ubuntu Server 22.04 | Apache2, DVWA, Wazuh Agent |
+| **SIEM Manager** | Ubuntu 22.04 | Wazuh Manager |
 
-Detail spesifik untuk setiap skenario (seperti IP Address dan tools yang digunakan) akan dijelaskan lebih lanjut di masing-masing dokumentasi.
+Detail spesifik seperti IP Address dan konfigurasi akan dijelaskan di setiap dokumentasi skenario.
+
+## 🛠️ Koleksi Custom Rules
+
+Semua *custom rules* yang dibuat untuk proyek ini dapat ditemukan di folder [`/rules`](./rules/). Saat ini tersedia:
+
+- [`rules/local_rules.xml`](./rules/local_rules.xml) - Rule untuk deteksi Brute Force Hydra (A01)
 
 ## 🎯 Tujuan Proyek
 
-1.  **Membangun Portofolio**: Menunjukkan kemampuan praktis dalam mengimplementasikan SIEM untuk deteksi ancaman.
-2.  **Mendemonstrasikan Pemahaman OWASP Top 10**: Tidak hanya memahami teorinya, tetapi juga bisa mendeteksi serangan yang sesuai dengan setiap kategori.
-3.  **Penerapan MITRE ATT&CK**: Menghubungkan alert dengan taktik dan teknik dalam framework MITRE ATT&CK untuk analisis yang lebih standar.
-4.  **Dokumentasi Terstruktur**: Menyediakan panduan yang jelas dan rapi untuk setiap skenario deteksi.
+1. **Membangun Portofolio**: Menunjukkan kemampuan praktis dalam SIEM Engineering dan Threat Detection
+2. **Validasi OWASP Top 10**: Mendemonstrasikan deteksi untuk setiap kategori risiko
+3. **Penerapan MITRE ATT&CK**: Memberikan konteks ancaman standar industri
+4. **Dokumentasi Terstruktur**: Menyediakan panduan yang jelas dan replicable
 
-## 🖇️ Navigasi Cepat
+## 🚀 Mulai Jelajahi
 
-*   Mulai dengan skenario pertama: [**A01: Broken Authentication - Deteksi Brute Force Hydra**](./01-Broken-Authentication.md)
+- **[Skenario 1: A01 - Broken Authentication (Brute Force Hydra)](./01-Broken-Authentication/)** → Lihat detil implementasi pertama
 
 ## 🙋‍♂️ Tentang Pembuat
 
-Proyek ini dikembangkan sebagai bagian dari portofolio keamanan siber. Fokus utama: *Security Operations Center (SOC)*, *SIEM Engineering*, *Threat Hunting*, dan *Detection Rule Writing*.
+Proyek ini dikembangkan sebagai bagian dari portofolio keamanan siber. Fokus utama: **SOC Operations**, **SIEM Engineering**, **Threat Hunting**, dan **Detection Rule Writing**.
 
 ---
-*Untuk informasi lebih lanjut, diskusi, atau kolaborasi, silakan hubungi.*
+*Untuk informasi lebih lanjut atau diskusi, silakan hubungi.*
