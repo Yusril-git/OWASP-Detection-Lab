@@ -45,12 +45,22 @@ Di mesin Kali Linux (192.168.15.138), jalankan perintah Hydra:
 
 bash
 hydra -l admin -P /usr/share/wordlists/rockyou.txt 192.168.15.139 http-post-form "/DVWA/login.php:username=^USER^&password=^PASS^&Login=Login:Login failed"
+Penjelasan perintah:
+
+-l admin → Username target (admin)
+
+-P /usr/share/wordlists/rockyou.txt → Wordlist password
+
+http-post-form → Metode serangan (HTTP POST form)
+
+Login failed → String indikator login gagal
+
 Screenshot eksekusi Hydra di Kali Linux:
 
 https://./images/hydra-attack-terminal.png
 
 Langkah 2: Log Akses Apache di Target
-Setiap percobaan login dari Hydra tercatat di file /var/log/apache2/access.log pada mesin target (Ubuntu Server).
+Setiap percobaan login dari Hydra tercatat di file /var/log/apache2/access.log pada mesin target (Ubuntu Server). Perhatikan User-Agent yang menunjukkan identitas Hydra.
 
 Screenshot log akses Apache yang menunjukkan aktivitas Hydra:
 
@@ -59,11 +69,11 @@ https://./images/apache-access-log-hydra.png
 Langkah 3: Proses Deteksi oleh Wazuh
 Logging: Setiap percobaan login dari Hydra tercatat di log akses Apache
 
-Forwarding: Wazuh Agent mengirim log ke Wazuh Manager
+Forwarding: Wazuh Agent membaca log dan mengirim ke Wazuh Manager secara real-time
 
-Analysis: Wazuh Manager mencocokkan dengan rule yang ada
+Analysis: Wazuh Manager menerima log, mem-parsing, dan mencocokkannya dengan rule yang ada
 
-Alerting: Rule ID 100002 terpicu → alert level 10 dihasilkan
+Alerting: Karena ada kecocokan dengan Rule ID 100002 (adanya string "hydra" di User-Agent), maka alert level 10 langsung dihasilkan
 
 Langkah 4: Hasil Deteksi di Wazuh Dashboard
 Alert langsung muncul di Wazuh Dashboard dengan level kritis (10).
@@ -80,7 +90,7 @@ Level      : 10
 Description: 🚨 [A01: Broken Authentication] Serangan Brute Force Web (Hydra) Terdeteksi!
 Source IP  : 192.168.15.138 (Attacker)
 Target IP  : 192.168.15.139 (Target)
-Screenshot tambahan:
+Screenshot tambahan dari proses deteksi:
 
 https://./images/Screenshot%25202026-03-05%2520085813.png
 https://./images/Screenshot%25202026-03-05%2520090306.png
@@ -88,23 +98,26 @@ https://./images/Screenshot%25202026-03-05%2520090306.png
 📊 Mapping MITRE ATT&CK
 Taktik	Teknik	ID
 Credential Access	Brute Force	T1110
+Dengan mapping ini, alert tidak hanya memberi tahu apa yang terjadi, tetapi juga di mana posisinya dalam siklus hidup serangan menurut standar industri.
+
 ✅ Kesimpulan
 Proyek ini berhasil mendemonstrasikan:
 
-Deteksi Dini: Wazuh mampu mendeteksi serangan Brute Force secara real-time
+Deteksi Dini: Wazuh mampu mendeteksi serangan Brute Force secara real-time, memungkinkan respons cepat sebelum akun berhasil dikompromikan
 
-Kustomisasi Rule: Rule spesifik untuk alat Hydra berhasil diimplementasikan
+Kustomisasi Rule: Kemampuan membuat rule kustom sangat penting untuk mendeteksi alat serangan spesifik (Hydra) yang mungkin tidak terdeteksi oleh rule bawaan
 
-Konteks Ancaman: Mapping ke MITRE ATT&CK (T1110) meningkatkan nilai analisis
+Konteks Ancaman: Mapping ke MITRE ATT&CK (T1110) memberikan nilai tambah dengan menempatkan serangan dalam kerangka yang diakui secara global
 
-OWASP Top 10: Validasi deteksi untuk kategori Broken Authentication
+Penerapan OWASP Top 10: Berhasil memvalidasi bahwa serangan Broken Authentication dapat dimonitor dan dideteksi secara efektif
 
 📁 File Pendukung
-Custom Rule: ../rules/local_rules.xml
+Custom Rule: ../rules/local_rules.xml - File XML berisi rule deteksi Hydra
 
-Screenshots: ./images/
+Screenshots: ./images/ - Koleksi screenshot proses serangan dan deteksi
 
 🖇️ Navigasi
-Kembali ke README Utama
+Kembali ke README Utama - Lihat semua skenario OWASP Top 10
 
-Dokumentasi ini disusun sebagai bagian dari portofolio keamanan siber.
+Dokumentasi ini disusun sebagai bagian dari portofolio keamanan siber. Fokus: SIEM Engineering, Threat Detection, dan OWASP Top 10.
+
