@@ -1,25 +1,25 @@
-# 🚨 React2Shell (CVE-2025-55182) Detection Lab
+# 🛡️ OWASP Detection Lab - Brute Force (Hydra)
 
-Repositori ini adalah dokumentasi simulasi dan deteksi kerentanan **React2Shell (CVE-2025-55182)** menggunakan pendekatan *Blue Team* dan **Wazuh SIEM/EDR**. Fokus utama proyek ini adalah membangun *Detection Engineering* untuk menangkap aktivitas *Insecure Deserialization* pada aplikasi berbasis Node.js/React.
+Dokumentasi ini menunjukkan keberhasilan implementasi **Wazuh SIEM** untuk mendeteksi serangan **Brute Force** secara real-time pada lingkungan lab cybersecurity.
 
-## 🎯 Objektif Lab
-1. **Simulation**: Membangun aplikasi rentan untuk memahami *attack vector* (penggunaan payload Base64 dan eksekusi fungsi arbitrer).
-2. **Log Analysis**: Menganalisis *behavior* aplikasi saat eksploitasi terjadi (RCE dan Reverse Shell).
-3. **Detection Engineering**: Membuat *custom rule* kustom di Wazuh untuk menangkap *Indicator of Compromise* (IOC) spesifik dari eksploitasi ini secara *real-time*.
+## 📋 Ringkasan Proyek
+Proyek ini berfokus pada pemantauan log akses Apache untuk mengidentifikasi aktivitas mencurigakan dari alat penetrasi populer, yaitu **Hydra**, sesuai dengan kategori serangan **Broken Authentication** pada OWASP Top 10.
 
-## 🛠️ Tools yang Digunakan
-* **SIEM**: Wazuh Manager & Agent
-* **Environment**: Ubuntu Server (Target), Kali Linux (Attacker)
-* **Application**: Node.js, Express, `node-serialize`
-* **Network**: Netcat (untuk simulasi Reverse Shell)
+## 🛠️ Arsitektur Lab
+* **Attacker**: Kali Linux (IP: 192.168.15.138)
+* **SIEM Manager**: Wazuh Manager (Ubuntu 22.04)
+* **Target/Agent**: Ubuntu Server 22.04 dengan Apache2 & DVWA (IP: 192.168.15.139)
 
-## 📂 Struktur Proyek
-* `/app`: Berisi *source code* aplikasi Node.js yang rentan.
-* `/payloads`: Script generator untuk membuat payload Base64 jahat.
-* `/wazuh-rules`: Konfigurasi XML untuk *custom detection rules* di Wazuh.
-* `/evidence`: Bukti *screenshot* dari alert Wazuh (Level 13 Critical).
+## 🛡️ Konfigurasi Deteksi
+Saya mengimplementasikan *Custom Rules* pada Wazuh Manager (`local_rules.xml`) menggunakan **Regex Case-Insensitive** untuk menangkap User-Agent unik yang dikirimkan oleh Hydra.
 
----
-**Author**: Muhamad Yusril Malakaini
-**Role**: Aspiring SOC Analyst | Blue Team Enthusiast
-**Year**: 2026
+### Custom Rule (ID: 100002):
+```xml
+<rule id="100002" level="10">
+  <if_sid>31100,31101,31108</if_sid>
+  <regex type="pcre2">(?i)hydra</regex>
+  <description>Waspada! Serangan Brute Force Web (Hydra) Terdeteksi!</description>
+  <mitre>
+    <id>T1110</id>
+  </mitre>
+</rule>
