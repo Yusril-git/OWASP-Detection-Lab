@@ -28,15 +28,14 @@ OWASP-Detection-Lab/
 └── README.md                    # Dokumentasi utama (file ini)
 ```
 
-## 📋 Daftar Skenario Deteksi (OWASP Top 10)
+## 📋 Daftar Skenario Deteksi (OWASP Top 10 2025)
 
-| Kode | Kategori OWASP | Vektor Serangan | Status | Dokumentasi |
-|:----:|----------------|-----------------|--------|-------------|
-| **A01** | Broken Authentication | Brute Force Attack dengan Hydra | ✅ Selesai | [01-Broken-Authentication/](./01-Broken-Authentication/) |
-| **A03** | Injection | SQL Injection dengan SQLMap | ✅ Selesai | [02-Injection/](./02-Injection/) |
-| **A02** | Cryptographic Failures | *(Coming Soon)* | ⏳ Rencana | - |
-| **A04** | Insecure Design | *(Coming Soon)* | ⏳ Rencana | - |
-| **A05** | Security Misconfiguration | *(Coming Soon)* | ⏳ Rencana | - |
+| Project | Kode OWASP | Kategori | Vektor Serangan | Status | Dokumentasi |
+|:-------:|:----------:|----------|-----------------|--------|-------------|
+| **#1** | **A07:2025** | Authentication Failures | Brute Force Attack dengan Hydra | ✅ Selesai | [01-Broken-Authentication/](./01-Broken-Authentication/) |
+| **#2** | **A05:2025** | Injection | SQL Injection dengan SQLMap | ✅ Selesai | [02-Injection/](./02-Injection/) |
+| **#3** | A02:2025 | Security Misconfiguration | *(Coming Soon)* | ⏳ Rencana | - |
+| **#4** | A01:2025 | Broken Access Control | *(Coming Soon)* | ⏳ Rencana | - |
 
 > **Catatan:** Penomoran mengikuti kode OWASP Top 10 asli (A01, A02, A03, dst). Folder `02-Injection` berisi skenario **A03: Injection**.
 
