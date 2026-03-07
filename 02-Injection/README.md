@@ -66,12 +66,3 @@ Wazuh berhasil memicu alert **Level 10** secara masif ketika serangan berlangsun
 
 ```
 
----
-
-### ✅ Checklist Akhir:
-1.  **Nama File Gambar**: Pastikan 3 foto yang kamu upload di folder `images` namanya sudah persis `sqlmap-attack.png`, `apache-sqli-log.png`, dan `wazuh-sqli-alert.png`.
-2.  **Commit**: Simpan perubahan dan lihat hasilnya di GitHub.
-
-**Gimana Envy? Sudah muncul semua fotonya dengan rapi?** Folder 01 dan 02 kamu sekarang sudah jadi portofolio yang sangat solid! Mau lanjut ke simulasi ke-3 atau mau istirahat dulu?
-
-```
